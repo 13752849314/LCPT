@@ -1,5 +1,6 @@
 package com.happygh0st.lcpt.controller;
 
+import com.happygh0st.lcpt.commons.Results;
 import com.happygh0st.lcpt.entity.User;
 import com.happygh0st.lcpt.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User test(@PathVariable Integer id) {
-        return userService.getUserById(id);
+    public Results test(@PathVariable Integer id) {
+        User user = userService.getUserById(id);
+        return Results.success().addData("user", user);
     }
 }
