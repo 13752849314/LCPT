@@ -3,4 +3,7 @@ project(my_redis)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(my_redis main.cpp)
+add_executable(my_redis main.cpp
+        Session.cpp
+        Session.h
+        Server.hpp)
