@@ -2,7 +2,9 @@
 // Created by admin on 25-5-9.
 //
 
-#include "Session.h"
+#include "Session.hpp"
+
+#include <thread>
 
 Session::Session(boost::asio::io_context& io_context): socket_(io_context)
 {
@@ -34,6 +36,19 @@ void Session::async_read()
     });
 }
 
+std::string results(const std::string& cmd)
+{
+    switch (cmd[0])
+    {
+    case '1':
+        return "111\n";
+    case '2':
+        return "222\n";
+    default:
+        return "333\n";
+    }
+}
+
 void Session::handle_read(std::size_t length)
 {
     std::istream is(&buffer_);
@@ -41,17 +56,28 @@ void Session::handle_read(std::size_t length)
     std::getline(is, line); // 提取一行数据
 
     std::cout << "Client: " << line << std::endl;
-
+    /**
+     * todo
+     * 1 解析命令
+     * 2 执行命令
+     * 3 返回结果
+     */
+    std::string res = results(line);
+    std::cout << "res:" << res << std::endl;
     // 异步回显数据给客户端
     auto self(shared_from_this());
     boost::asio::async_write(
         socket_,
-        boost::asio::buffer(line + "\n"),
-        [this, self](boost::system::error_code ec, std::size_t /*length*/) {
-            if (!ec) {
+        boost::asio::buffer(res),
+        [this, self](boost::system::error_code ec, std::size_t /*length*/)
+        {
+            if (!ec)
+            {
                 // 继续读取下一条消息
                 async_read();
-            } else {
+            }
+            else
+            {
                 std::cerr << "Write error: " << ec.message() << std::endl;
             }
         });

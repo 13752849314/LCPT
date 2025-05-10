@@ -5,5 +5,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_executable(my_redis main.cpp
         Session.cpp
-        Session.h
-        Server.hpp)
+        Session.hpp
+        Server.hpp
+        argparse.hpp
+        utils.cpp
+        utils.hpp
+        Config.hpp)
