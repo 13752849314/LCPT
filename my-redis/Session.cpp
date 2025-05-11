@@ -6,6 +6,8 @@
 
 #include <thread>
 
+#include "Command.hpp"
+
 Session::Session(boost::asio::io_context& io_context): socket_(io_context)
 {
 }
@@ -62,7 +64,8 @@ void Session::handle_read(std::size_t length)
      * 2 执行命令
      * 3 返回结果
      */
-    std::string res = results(line);
+    auto r = doQuery(line);
+    std::string res = r.to_string();
     std::cout << "res:" << res << std::endl;
     // 异步回显数据给客户端
     auto self(shared_from_this());

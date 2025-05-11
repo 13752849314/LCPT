@@ -4,30 +4,19 @@
 
 #include "utils.hpp"
 
-
-boost::property_tree::ptree read_config_from_json()
+json read_config_from_json()
 {
-    boost::property_tree::ptree pt;
-    // std::ifstream gbkFile("./config.json", std::ios::binary);
-    // std::stringstream buffer;
-    // buffer << gbkFile.rdbuf();
-    // std::string gbkContent = buffer.str();
-    // gbkFile.close();
-    // std::string utf8Content = GBKToUTF8(gbkContent);
-    //
-    // std::istringstream iss(utf8Content);
-
-    // read_json(iss, pt);
-    try
+    std::ifstream file("../config.json");
+    json j;
+    if (!file.is_open())
     {
-        read_json("config.json", pt);
+        std::cout << "file open fail!" << std::endl;
+        j["error"] = "file open fail!";
+        return j;
     }
-    catch (std::exception& e)
-    {
-        std::cout << e.what();
-    }
-
-    return pt;
+    file >> j;
+    file.close();
+    return j;
 }
 
 argparse::ArgumentParser read_config_from_cmd(int argc, const char* argv[])

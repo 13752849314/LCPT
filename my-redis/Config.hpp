@@ -17,9 +17,9 @@ namespace config
     void initConfigFromJson()
     {
         auto pt = read_config_from_json();
-        if (pt.count("port") != 0)
+        if (pt.contains("port"))
         {
-            Config["port"] = pt.get<short>("port");
+            Config["port"] = pt.at("port").get<short>();
         }
     }
 

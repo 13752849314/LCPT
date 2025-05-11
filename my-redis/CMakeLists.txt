@@ -8,6 +8,9 @@ add_executable(my_redis main.cpp
         Session.hpp
         Server.hpp
         argparse.hpp
+        json.hpp
         utils.cpp
         utils.hpp
-        Config.hpp)
+        Config.hpp
+        Command.cpp
+        Command.hpp)
