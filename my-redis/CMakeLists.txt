@@ -13,4 +13,6 @@ add_executable(my_redis main.cpp
         utils.hpp
         Config.hpp
         Command.cpp
-        Command.hpp)
+        Command.hpp
+        dict.cpp
+        dict.hpp)
